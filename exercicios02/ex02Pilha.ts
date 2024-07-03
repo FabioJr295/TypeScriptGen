@@ -1,33 +1,50 @@
-import readline from "readline-sync";
-import { Queue } from "../interface/Queue";
+import { Stack } from "../interface/Stack";
+import leia = require("readline-sync");
 
-const leia = readline.question;
-const fila = new Queue<string>();
+const pilha = new Stack<string>();
 
-console.log("================Menu===============");
-console.log("\n| 1 - Adicionar Livro na Fila   |");
-console.log("\n| 2 - Listar todos os Livros    |");
-console.log("\n| 3 - Retirar Livro da Fila     |");
-console.log("\n| 0 -        Sair               |");
-console.log("===================================");
-console.log("Entre com a opção desejada:");
+let opcao:number; 
 
-let opcao = readline.question("Digite a opção desejada: ");
+do{
+  console.log("================Menu===============");
+  console.log("\n| 1 - Adicionar livro na pilha  |");
+  console.log("\n| 2 - Listar todos os livros    |");
+  console.log("\n| 3 - Retirar livro da pilha    |");
+  console.log("\n| 0 -        Sair               |");
+  console.log("===================================");
 
-while (opcao !== "0") {
-  switch (opcao) {
-    case "1":
-      let nome = leia("Digite o nome do Livro: ");
-      fila.enqueue(nome);
-      break;
-    case "2":
-      fila.printQueue();
-      break;
-    case "3":
-      fila.dequeue();
-      break;
-    default:
-      console.log("Opção inválida!");
-  }
-  opcao = leia("Digite a opção desejada: ");
-}
+    opcao = leia.questionInt("Digite a opcao desejada: ");
+
+    switch (opcao) {
+        case 1:
+            pilha.push(leia.question("\nDigite o nome: "));
+            console.log("\nLista de livros: \n"); 
+            pilha.printStack();
+            console.log("\nLivro adicionado!");
+            break;
+        case 2:
+            if(pilha.isEmpty() == true){
+                console.log("\nA pilha está vazia!");
+            } else {
+                console.log("\nLista de livros: \n"); 
+                pilha.printStack();
+            }
+            break;
+        case 3:
+            if(pilha.isEmpty() === true){
+                console.log("\nA pilha está vazia!");
+            } else {
+                pilha.pop()
+                console.log("\nLista de livros:\n"); 
+                pilha.printStack()
+                console.log(`\nUm livro foi retirado da pilha!`);
+            }
+            break;
+        case 0:
+            console.log("\nPrograma finalizado!");
+            break;
+        default:
+            console.log("\nOpção inválida!");
+            break;
+    }    
+} while (opcao != 0);
